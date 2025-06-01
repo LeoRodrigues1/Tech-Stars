@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <title>Quiz - Descubra sua Trilha</title>
+  <link rel="stylesheet" href="assets/css/style_quiz.css">
+</head>
+<body>
+
+<div class="quiz-container">
+  <h2>Descubra sua trilha ideal na tecnologia!</h2>
+
+  <!-- Perguntas dinâmicas -->
+  <div id="quiz"></div>
+
+  <!-- Resultado final -->
+  <div id="resultado" class="result"></div>
+</div>
+
+<script>
+  const perguntas = [
+    "Com qual atividade você mais se identifica?",
+    "Qual dessas ferramentas você gostaria de aprender?",
+    "Qual carreira você mais admira?",
+    "Como você prefere resolver um problema?",
+    "Qual área você gostaria de explorar?",
+    "Se você pudesse dominar uma habilidade hoje, qual seria?",
+    "Você gostaria de trabalhar mais com...",
+    "Qual curso você faria primeiro?",
+    "Você se imagina criando...",
+    "Em um projeto, qual função você gostaria de ter?"
+  ];
+
+  const opcoes = [
+    ["programacao", "frontend", "dados", "ia", "devops", "ux", "mobile", "gestao"],
+    ["programacao", "frontend", "dados", "ia", "devops", "ux", "mobile", "gestao"],
+    ["programacao", "frontend", "dados", "ia", "devops", "ux", "mobile", "gestao"],
+    ["programacao", "frontend", "dados", "ia", "devops", "ux", "mobile", "gestao"],
+    ["programacao", "frontend", "dados", "ia", "devops", "ux", "mobile", "gestao"],
+    ["programacao", "frontend", "dados", "ia", "devops", "ux", "mobile", "gestao"],
+    ["programacao", "frontend", "dados", "ia", "devops", "ux", "mobile", "gestao"],
+    ["programacao", "frontend", "dados", "ia", "devops", "ux", "mobile", "gestao"],
+    ["programacao", "frontend", "dados", "ia", "devops", "ux", "mobile", "gestao"],
+    ["programacao", "frontend", "dados", "ia", "devops", "ux", "mobile", "gestao"]
+  ];
+
+  const textos = {
+    programacao: "Resolver problemas com código",
+    frontend: "Criar interfaces web modernas",
+    dados: "Analisar grandes volumes de dados",
+    ia: "Construir sistemas inteligentes",
+    devops: "Automatizar e integrar processos",
+    ux: "Criar boas experiências visuais",
+    mobile: "Desenvolver aplicativos para celular",
+    gestao: "Organizar projetos e liderar equipes"
+  };
+
+  const nomesTrilhas = {
+    programacao: "Programação",
+    frontend: "Front-End",
+    dados: "Data Science",
+    ia: "Inteligência Artificial",
+    devops: "DevOps",
+    ux: "UX & Design",
+    mobile: "Mobile",
+    gestao: "Gestão e Inovação"
+  };
+
+  let passo = 0;
+  const respostas = [];
+
+  function mostrarPergunta() {
+    if (passo >= perguntas.length) {
+      mostrarResultado();
+      return;
+    }
+
+    const pergunta = perguntas[passo];
+    const container = document.getElementById("quiz");
+    container.innerHTML = `
+      <div class="question">
+        <p>${passo + 1}. ${pergunta}</p>
+        ${opcoes[passo].map(op => `
+          <label><input type="radio" name="q${passo}" value="${op}"> ${textos[op]}</label>
+        `).join("")}
+        <button onclick="proxima()">Próxima</button>
+      </div>
+    `;
+  }
+
+  function proxima() {
+    const selecionado = document.querySelector(`input[name="q${passo}"]:checked`);
+    if (!selecionado) {
+      alert("Por favor, escolha uma opção.");
+      return;
+    }
+    respostas.push(selecionado.value);
+    passo++;
+    mostrarPergunta();
+  }
+
+  function mostrarResultado() {
+  const contagem = {};
+  respostas.forEach(r => {
+    contagem[r] = (contagem[r] || 0) + 1;
+  });
+
+  let maior = 0;
+  let trilhaFinal = "";
+  for (const area in contagem) {
+    if (contagem[area] > maior) {
+      maior = contagem[area];
+      trilhaFinal = area;
+    }
+  }
+
+  const resultado = document.getElementById("resultado");
+  resultado.innerHTML = `
+    🎯 Sua trilha ideal é: <strong>${nomesTrilhas[trilhaFinal]}</strong>!
+    <br><br>
+    <button onclick="refazerQuiz()">Refazer quiz</button>
+    <button onclick="verTrilha('${trilhaFinal}')">Ver minha trilha</button>
+  `;
+
+  document.getElementById("quiz").innerHTML = "";
+}
+
+function refazerQuiz() {
+  passo = 0;
+  respostas.length = 0;
+  document.getElementById("resultado").innerHTML = "";
+  mostrarPergunta();
+}
+
+function verTrilha(trilha) {
+  // Armazenar no localStorage (poderia também usar parâmetros de URL)
+  localStorage.setItem("trilhaEscolhida", trilha);
+  window.location.href = "dashboard.php"; // ou outro destino
+}
+
+
+  // Iniciar o quiz
+  mostrarPergunta();
+</script>
+
+</body>
+</html>

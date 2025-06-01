@@ -22,6 +22,22 @@ Promover a inclusão e o empoderamento de meninas nas áreas STEAM (Ciência, Te
 * Área do aluno com progresso e sugestões de cursos;
 
 * Ambiente colaborativo e intuitivo.
+## 🧑‍💻 Equipe de Desenvolvimento
+
+- Aluno 1 – Éler Yudi Mitani Sotoma
+- Aluno 2 – Guilherme Renato Terra De Macedo
+- Aluno 3 – Leonardo Rodrigues
+- Aluno 4 – Vanderson Augusto Ferreira da Rosa
+---
+
+## ✨ Funcionalidades Desenvolvidas até o momento
+
+- Cadastro de novas usuárias
+- Login com autenticação de senha criptografada
+- Dashboard com botão "Descubra sua trilha"
+- Quiz dinâmico com 10 perguntas e 8 áreas de afinidade
+- Exibição da trilha ideal ao final do quiz
+- Botões de “Refazer quiz” e “Ver minha trilha”
 
 ## 🛠 Tecnologias Utilizadas 
 HTML, CSS, JavaScript, PHP, MySQL — além de ferramentas de apoio como Google Drive, Figma, GitHub e Jira, garantindo organização, versionamento e colaboração eficiente durante o desenvolvimento.
@@ -37,3 +53,40 @@ HTML, CSS, JavaScript, PHP, MySQL — além de ferramentas de apoio como Google 
   <img src="https://img.shields.io/badge/Jira-0052CC?style=for-the-badge&logo=jira&logoColor=white" alt="Jira" />
 </p>
 
+## 📦 Como instalar e executar o sistema
+
+### 📥 1. Clonar o repositório
+
+```bash
+-git clone https://github.com/seu-usuario/tech-stars.git
+```
+## ⚙️ 2. Requisitos
+- Instale o XAMPP (https://www.apachefriends.org/pt_br/index.html)
+- Clone o projeto em htdocs (ex:/xampp/htdocs/tech-stars)
+
+### ou
+- Instale o WAMP (https://www.wampserver.com/en/)
+- Clone o projeto em www (ex:/wamp64/www/tech-stars
+
+## ▶️ 3. Executar o sistema
+- Execute o XAMPP ou WAMP
+- Acesse no navegador:
+```bash
+http://localhost/tech-stars/index.php
+```
+## 🧪 Como testar o sistema
+1. Login
+- Acesse index.php
+- Faça login com o usuario de testes
+```bash
+e-mail: teste@techstars.com
+senha: 123456
+```
+2. Quiz
+- Após o login, clique em "Descubra sua trilha"
+- O quis será iniciado com 10 perguntas
+- Ao final, será exibida sua trilha mais compatível
+- Use os botões
+  - **Refazer quiz**→ reinicia as perguntas
+   - **Ver minha trilha** → redireciona para o dashboard
+   
