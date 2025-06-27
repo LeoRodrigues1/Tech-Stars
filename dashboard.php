@@ -1,7 +1,28 @@
 <?php
 session_start();
+require 'conexao.php';
+
+if (!isset($_SESSION['usuario_id'])) {
+    header('Location: index.php');
+    exit;
+}
+
+$nome_usuario = $_SESSION['usuario_nome'];
+
+try {
+    $query = "SELECT nome, slug FROM trilhas ORDER BY id";
+    $trilhas = $pdo->query($query)->fetchAll();
+} catch (PDOException $e) {
+    $trilhas = [];
+    die("Erro ao buscar as trilhas: " . $e->getMessage());
+}
 
 ?>
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<!DOCTYPE html>
+<html lang="pt-br">
 
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -24,9 +45,16 @@ session_start();
         <li><a href="#">Sobre Nós</a></li>
         <li><a href="#">Conteúdos</a></li>
         <li><a href="#trilhas">Áreas de aprendizado</a></li>
+        <?php
+        if (isset($_SESSION['usuario_tipo']) && $_SESSION['usuario_tipo'] === 'admin'): ?>
+          <li><a href="admin/admin_dashboard.php" style="color: #00bfff; font-weight: bold;">Painel Admin</a></li>
+        <?php endif; ?>
       </ul>
 
-      <a class="cta-button" href="index.php">Entrar</a>
+      <div class="user-info">
+          <span>Olá, <?php echo htmlspecialchars($_SESSION['usuario_nome']); ?>!</span>
+          <a class="cta-button" href="logout.php">Sair</a>
+      </div>
     </div>
   </nav>
 
@@ -40,15 +68,35 @@ session_start();
 
   <section id="trilhas" class="cards-grid">
     <h1>Áreas de Aprendizado</h1>
-    <div class="tech-card">💻 <strong>PROGRAMAÇÃO</strong><br>Lógica, Python, PHP, Java, C, IoT...</div>
-    <div class="tech-card">🎨 <strong>FRONT-END</strong><br>HTML, CSS, JS, React, jQuery...</div>
-    <div class="tech-card">📊 <strong>DATA SCIENCE</strong><br>SQL, BI, Estatística, Excel...</div>
-    <div class="tech-card">🤖 <strong>INTELIGÊNCIA ARTIFICIAL</strong><br>IA para programação e dados...</div>
-    <div class="tech-card">🔐 <strong>DEVOPS</strong><br>AWS, Docker, Azure, Segurança...</div>
-    <div class="tech-card">🖌 <strong>UX & DESIGN</strong><br>UX, Motion, 3D, Prototipação...</div>
-    <div class="tech-card">📱 <strong>MOBILE</strong><br>Flutter, Android, Kotlin, iOS...</div>
-    <div class="tech-card">🚀 <strong>GESTÃO E INOVAÇÃO</strong><br>Agile, Liderança, Startups...</div>
+    <?php foreach ($trilhas as $trilha): ?>
+      <a href="trilha_pagina.php?slug=<?php echo htmlspecialchars($trilha['slug']); ?>" class="tech-card-link">
+        <div class="tech-card" data-slug="<?php echo htmlspecialchars($trilha['slug']); ?>">
+          <strong><?php echo mb_strtoupper(htmlspecialchars($trilha['nome'])); ?></strong>
+        </div>
+      </a>
+    <?php endforeach; ?>
+
+    <?php if (empty($trilhas)): ?>
+      <p>Nenhuma trilha de aprendizado encontrada no momento.</p>
+    <?php endif; ?>
   </section>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const trilhaEscolhida = localStorage.getItem("trilhaEscolhida");
+
+        if (trilhaEscolhida) {
+            const cardDestacado = document.querySelector(`.tech-card[data-slug='${trilhaEscolhida}']`);
+
+            if (cardDestacado) {
+                cardDestacado.classList.add('destaque');
+                cardDestacado.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }
+
+            localStorage.removeItem("trilhaEscolhida");
+        }
+    });
+  </script>
 
 </body>
 </html>

@@ -1,38 +1,34 @@
 <?php
 session_start();
+require 'conexao.php'; // Inclui a conexão
 
-// Só aceitar POST
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-    header('Location: login.php');
+    header('Location: index.php');
     exit;
 }
 
-// Recebe e valida email
 $email = filter_var($_POST['email'], FILTER_VALIDATE_EMAIL);
 $senha = $_POST['senha'];
 
 if (!$email) {
-    header('Location: login.php?error=email_invalido');
+    header('Location: index.php?error=email_invalido');
     exit;
 }
 
-// Usuário padrão fixo para teste
-$usuarioTeste = [
-    'id' => 1,
-    'nome' => 'Usuário Teste',
-    'email' => 'teste@techstars.com',
-    'senha_hash' => password_hash('123456', PASSWORD_DEFAULT)
-];
+$sql = "SELECT id, nome, senha_hash, tipo FROM usuarios WHERE email = ?";
+$stmt = $pdo->prepare($sql);
+$stmt->execute([$email]);
+$usuario = $stmt->fetch();
 
-// Verifica email e senha
-if ($email === $usuarioTeste['email'] && password_verify($senha, $usuarioTeste['senha_hash'])) {
-    // Login ok: cria sessão
-    $_SESSION['usuario_id'] = $usuarioTeste['id'];
-    $_SESSION['usuario_nome'] = $usuarioTeste['nome'];
+if ($usuario && password_verify($senha, $usuario['senha_hash'])) {
+    $_SESSION['usuario_id'] = $usuario['id'];
+    $_SESSION['usuario_nome'] = $usuario['nome'];
+    $_SESSION['usuario_tipo'] = $usuario['tipo'];
 
     header('Location: dashboard.php');
     exit;
 } else {
-    header('Location: login.php?error=login_invalido');
+    header('Location: index.php?error=login_invalido');
     exit;
 }
+?>

@@ -39,7 +39,6 @@ session_start();
 
         <div class="extra-links">
           <a href="cadastro.php">Cadastrar</a> / 
-          <a href="#">Entrar com Gmail</a>
         </div>
       </div>
     </div>
