@@ -33,7 +33,7 @@ if ($_SESSION['usuario_tipo'] !== 'admin') {
             <p>Aqui você poderá gerenciar os conteúdos do site.</p>
 
             <div style="margin-top: 20px;">
-                <a href="upload_video.php"><button>Fazer Upload de Vídeo</button></a>
+                <a href="adicionar_video.php"><button>Adicionar Vídeo (URL)</button></a>
                 <a href="gerenciar_cursos.php"><button>Gerenciar Cursos</button></a>
             </div>
         </div>
