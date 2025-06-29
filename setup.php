@@ -18,7 +18,7 @@
         <?php
         $host = 'localhost';
         $user = 'root';
-        $pass = 'Ekh!pc6900';
+        $pass = '';
         $db_name = 'tech_stars_db';
 
         try {
