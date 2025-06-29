@@ -34,7 +34,7 @@ if ($_SESSION['usuario_tipo'] !== 'admin') {
 
             <div style="margin-top: 20px;">
                 <a href="adicionar_video.php"><button>Adicionar Vídeo (URL)</button></a>
-                <a href="gerenciar_cursos.php"><button>Gerenciar Cursos</button></a>
+                <a href="gerenciar_videos.php"><button>Gerenciar/Excluir Vídeos</button></a>
             </div>
         </div>
     </section>
