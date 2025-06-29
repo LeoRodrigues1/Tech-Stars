@@ -1,9 +1,8 @@
 <?php
-// Ajuste com seus dados de conexão
 $host = 'localhost';
-$db   = 'nome_do_banco';
-$user = 'usuario';
-$pass = 'senha';
+$db   = 'tech_stars_db';
+$user = 'root';
+$pass = '';
 $charset = 'utf8mb4';
 
 $dsn = "mysql:host=$host;dbname=$db;charset=$charset";

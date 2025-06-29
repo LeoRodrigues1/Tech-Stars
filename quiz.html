@@ -10,96 +10,205 @@
 <div class="quiz-container">
   <h2>Descubra sua trilha ideal na tecnologia!</h2>
 
-  <!-- Perguntas dinâmicas -->
   <div id="quiz"></div>
 
-  <!-- Resultado final -->
   <div id="resultado" class="result"></div>
 </div>
 
 <script>
-  const perguntas = [
-    "Com qual atividade você mais se identifica?",
-    "Qual dessas ferramentas você gostaria de aprender?",
-    "Qual carreira você mais admira?",
-    "Como você prefere resolver um problema?",
-    "Qual área você gostaria de explorar?",
-    "Se você pudesse dominar uma habilidade hoje, qual seria?",
-    "Você gostaria de trabalhar mais com...",
-    "Qual curso você faria primeiro?",
-    "Você se imagina criando...",
-    "Em um projeto, qual função você gostaria de ter?"
-  ];
+const quizData = [
+  {
+    pergunta: "Imagina que você tem vários blocos de montar e quer fazer algo incrível! Você gosta mais de:",
+    opcoes: [
+      { valor: "programacao", texto: "Seguir instruções passo a passo para construir um robô que faz o que você manda." }, // Programação
+      { valor: "frontend", texto: "Decorar a casinha de bonecas ou o carrinho, escolhendo as cores e onde cada coisa vai para ficar bonito e fácil de usar." }, // Front-end (UI/UX)
+      { valor: "dados", texto: "Contar quantos doces de cada tipo tem no pote e descobrir qual é o preferido de todo mundo." }, // Ciência de Dados (Análise)
+      { valor: "ia", texto: "Ensinar seu bichinho de estimação a dar a patinha ou buscar a bolinha, até ele aprender sozinho." }, // IA (Aprendizagem)
+      { valor: "devops", texto: "Montar sua barraca de acampamento rapidinho e arrumar tudo para que seus amigos consigam usar sem problemas." }, // DevOps (Eficiência Configuração)
+      { valor: "ux", texto: "Desenhar um brinquedo novo que seja super divertido e que todo mundo saiba como usar logo de primeira." }, // UX (Experiência)
+      { valor: "mobile", texto: "Criar um joguinho legal para jogar no tablet ou no celular da mamãe e do papai." }, // Desenvolvimento Mobile
+      { valor: "gestao", texto: "Organizar a brincadeira com seus amigos, decidindo quem faz o quê e garantindo que todos se divirtam juntos." } // Gerenciamento de Projetos
+    ]
+  },
+  {
+    pergunta: "Se você fosse um super-herói da tecnologia, qual poder você gostaria de ter?",
+    opcoes: [
+      { valor: "ia", texto: "Ter um cérebro super inteligente que aprende rapidinho e ajuda a resolver mistérios." }, // IA
+      { valor: "mobile", texto: "Criar mini-mundos incríveis dentro do celular que as pessoas podem carregar no bolso." }, // Mobile
+      { valor: "dados", texto: "Descobrir segredos escondidos em montanhas de informações, como um detetive de dados." }, // Ciência de Dados
+      { valor: "frontend", texto: "Fazer as coisas brilharem e ficarem lindas, para que todos que veem fiquem impressionados." }, // Front-end (Visuais)
+      { valor: "programacao", texto: "Conseguir dar vida a qualquer objeto, fazendo-o se mover ou falar seguindo suas ordens." }, // Programação (Controle)
+      { valor: "devops", texto: "Montar pontes e atalhos mágicos para que tudo funcione mais rápido e sem travamentos." }, // DevOps (Eficiência/Integração)
+      { valor: "ux", texto: "Fazer com que tudo que as pessoas toquem seja fácil e gostoso de usar, como um brinquedo perfeito." }, // UX (Usabilidade)
+      { valor: "gestao", texto: "Inspirar e organizar um time de outros super-heróis para que juntos consigam salvar o dia." } // Gestão
+    ]
+  },
+  {
+    pergunta: "Você está brincando de construir uma cidade de brinquedo. O que você mais gosta de fazer?",
+    opcoes: [
+      { valor: "programacao", texto: "Criar as regras de trânsito para os carrinhos se moverem sozinhos e não baterem." }, // Programação
+      { valor: "frontend", texto: "Pintar as casinhas, colocar janelas coloridas e jardins bonitos para a cidade ficar encantadora." }, // Front-end (Estética)
+      { valor: "dados", texto: "Contar quantas casas tem de cada cor e descobrir qual parte da cidade é a mais populosa." }, // Ciência de Dados
+      { valor: "ia", texto: "Fazer os bonequinhos aprenderem a ir sozinhos para a escola ou para o trabalho." }, // IA (Automação/Aprendizagem)
+      { valor: "devops", texto: "Construir as estradas e os encanamentos de água para que tudo funcione sem entupir." }, // DevOps (Infraestrutura)
+      { valor: "ux", texto: "Pensar onde colocar a praça e o parquinho para as crianças brincarem melhor e com segurança." }, // UX (Fluxo de Experiência)
+      { valor: "mobile", texto: "Criar um mapa interativo da cidade que as pessoas podem ver no relógio inteligente." }, // Mobile (Pequenos Dispositivos)
+      { valor: "gestao", texto: "Planejar onde cada parte da cidade vai ficar e organizar os construtores para terminar a tempo." } // Gestão
+    ]
+  },
+  {
+    pergunta: "Na escola, quando tem um trabalho em grupo, qual papel você mais gosta de desempenhar?",
+    opcoes: [
+      { valor: "gestao", texto: "Ser o líder que organiza as tarefas, escuta as ideias de todos e ajuda o grupo a não se perder." }, // Gestão
+      { valor: "programacao", texto: "Ajudar a resolver os desafios mais difíceis do trabalho, pensando em como fazer tudo funcionar." }, // Programação (Resolução de Problemas)
+      { valor: "frontend", texto: "Fazer o cartaz do trabalho ficar colorido, bem organizado e fácil de entender para a apresentação." }, // Front-end (Apresentação/Clareza)
+      { valor: "dados", texto: "Pesquisar e organizar as informações, transformando muitos números e fatos em algo que todos entendam." }, // Ciência de Dados (Pesquisa/Interpretação)
+      { valor: "ia", texto: "Propor ideias novas e espertas, como se o trabalho tivesse um 'cérebro' que pensa sozinho." }, // IA (Inovação/Soluções Inteligentes)
+      { valor: "devops", texto: "Garantir que todos os materiais estejam prontos, que a internet funcione e que a impressora não falhe na hora H." }, // DevOps (Suporte/Prontidão)
+      { valor: "ux", texto: "Pensar em como o professor e os colegas vão se sentir ao ver o trabalho, tornando-o agradável e fácil de seguir." }, // UX (Experiência do Público)
+      { valor: "mobile", texto: "Criar um pequeno app ou site simples para o trabalho que possa ser visto em qualquer celular." } // Mobile (Pequenas Ferramentas)
+    ]
+  },
+  {
+    pergunta: "Se você fosse criar um jogo novo, o que te deixaria mais animado?",
+    opcoes: [
+      { valor: "programacao", texto: "Escrever as 'regras secretas' do jogo, para os personagens se moverem e as fases funcionarem." }, // Programação
+      { valor: "frontend", texto: "Desenhar os personagens fofinhos, os cenários incríveis e os botões que piscam." }, // Front-end (Arte/Visuais)
+      { valor: "dados", texto: "Contar quantos pontos cada jogador faz e criar um placar de quem é o melhor do mundo." }, // Ciência de Dados (Métricas)
+      { valor: "ia", texto: "Fazer os inimigos do jogo serem espertos e aprenderem seus truques para te desafiar mais." }, // IA (IA do Oponente)
+      { valor: "devops", texto: "Garantir que o jogo funcione lisinho em qualquer computador ou console, sem travar." }, // DevOps (Performance/Implantação)
+      { valor: "ux", texto: "Pensar em como o jogador vai se sentir jogando, tornando cada fase mais divertida e viciante." }, // UX (Experiência do Jogador)
+      { valor: "mobile", texto: "Desenvolver o jogo para que ele possa ser baixado e jogado em qualquer tablet ou celular." }, // Mobile (Plataforma)
+      { valor: "gestao", texto: "Juntar o time que vai criar o jogo, organizar quem faz o quê e garantir que o jogo seja lançado." } // Gestão
+    ]
+  },
+  {
+    pergunta: "Qual dessas 'magias' tecnológicas você gostaria de dominar?",
+    opcoes: [
+      { valor: "devops", texto: "Fazer as coisas aparecerem magicamente onde e quando são necessárias, como um passe de mágica." }, // DevOps (Automação/Implantação)
+      { valor: "programacao", texto: "Transformar pensamentos em realidade, escrevendo feitiços que fazem máquinas obedecerem." }, // Programação (Comando)
+      { valor: "frontend", texto: "Fazer com que a tela do computador ou do celular se transforme em um mundo colorido e interativo." }, // Front-end (Visuais/Interação)
+      { valor: "dados", texto: "Ler a mente das pessoas (ou dos dados) para descobrir o que elas mais gostam e querem." }, // Ciência de Dados (Informação)
+      { valor: "ia", texto: "Ensinar objetos e computadores a pensarem e agirem sozinhos, como se tivessem vida própria." }, // IA (Inteligência)
+      { valor: "ux", texto: "Criar experiências tão incríveis que as pessoas se sintam como se estivessem em um conto de fadas." }, // UX (Experiência Encantadora)
+      { valor: "mobile", texto: "Colocar todo o poder de um computador dentro de um aparelhinho que cabe na palma da mão." }, // Mobile (Portabilidade)
+      { valor: "gestao", texto: "Ser o maestro de uma orquestra de magos, garantindo que todos os feitiços funcionem juntos." } // Gestão (Coordenação)
+    ]
+  },
+  {
+    pergunta: "Em um acampamento, você prefere ser o(a):",
+    opcoes: [
+      { valor: "programacao", texto: "Construtor(a) da fogueira, seguindo as instruções para ela acender e não apagar." }, // Programação (Estrutura/Lógica)
+      { valor: "frontend", texto: "Decorador(a) da barraca, deixando-a aconchegante e bonita com lanternas e cobertores." }, // Front-end (Estética/Conforto)
+      { valor: "dados", texto: "Contador(a) de histórias, analisando as reações de todos para saber qual história contar em seguida." }, // Ciência de Dados (Leitura de Público/Padrões)
+      { valor: "ia", texto: "Guia da floresta, que já aprendeu os melhores caminhos e atalhos para levar o grupo." }, // IA (Busca de Caminhos/Otimização)
+      { valor: "devops", texto: "Responsável por armar as barracas e arrumar a comida para que tudo esteja pronto na hora certa." }, // DevOps (Configuração/Logística)
+      { valor: "ux", texto: "Organizador(a) das brincadeiras para que todos se divirtam muito e queiram voltar no próximo acampamento." }, // UX (Planejamento de Eventos/Prazer)
+      { valor: "mobile", texto: "Fotógrafo(a) oficial, usando o celular para registrar todos os momentos divertidos." }, // Mobile (Uso de Dispositivos)
+      { valor: "gestao", texto: "Líder da expedição, planejando o que fazer a cada dia e garantindo que todos estejam seguros e felizes." } // Gestão (Planejamento/Liderança)
+    ]
+  },
+  {
+    pergunta: "Qual tipo de mistério você gostaria de desvendar?",
+    opcoes: [
+      { valor: "programacao", texto: "Como fazer um brinquedo quebrado voltar a funcionar, descobrindo seus segredos internos." }, // Programação (Depuração/Reparo)
+      { valor: "frontend", texto: "Por que algumas capas de livros são mais atraentes que outras e como fazer a sua ser a mais bonita." }, // Front-end (Princípios de Design)
+      { valor: "dados", texto: "Onde o pirata escondeu seu tesouro, analisando um mapa cheio de pistas e números." }, // Ciência de Dados (Reconhecimento de Padrões/Pistas)
+      { valor: "ia", texto: "Como ensinar um robô a entender e responder a perguntas como se fosse uma pessoa." }, // IA (PNL/Aprendizagem)
+      { valor: "devops", texto: "Por que a mensagem secreta demorou para chegar e como fazer ela chegar rapidinho da próxima vez." }, // DevOps (Eficiência/Entrega)
+      { valor: "ux", texto: "Por que as crianças amam tanto um certo brinquedo e como criar um ainda mais legal e fácil de usar." }, // UX (Comportamento do Usuário/Design)
+      { valor: "mobile", texto: "Como criar um aplicativo que mostre onde estão todos os pokémons raros na sua cidade." }, // Mobile (Apps Baseados em Localização)
+      { valor: "gestao", texto: "Como montar a equipe de detetives perfeita para resolver o mistério mais complicado do mundo." } // Gestão (Montagem de Equipe)
+    ]
+  },
+  {
+    pergunta: "Se você fosse construir um castelo de areia na praia, o que mais te interessaria?",
+    opcoes: [
+      { valor: "programacao", texto: "Montar a estrutura interna do castelo, garantindo que ele não caia e seja bem firme." }, // Programação (Lógica Principal)
+      { valor: "frontend", texto: "Decorar as torres com conchas coloridas e bandeirinhas, deixando-o o mais lindo da praia." }, // Front-end (Estética/Detalhe)
+      { valor: "dados", texto: "Contar quantas baldes de areia são necessários e qual é o melhor tipo de areia para cada parte do castelo." }, // Ciência de Dados (Análise de Recursos)
+      { valor: "ia", texto: "Criar um sistema para o castelo se auto-reparar quando uma onda bate." }, // IA (Auto-correção/Automação)
+      { valor: "devops", texto: "Garantir que a água do mar chegue na medida certa para a areia ficar perfeita e não desmoronar." }, // DevOps (Gerenciamento de Recursos/Fluxo)
+      { valor: "ux", texto: "Pensar em como as outras crianças vão brincar no castelo, adicionando túneis e escorregadores divertidos." }, // UX (Jogabilidade/Engajamento)
+      { valor: "mobile", texto: "Tirar fotos incríveis do castelo com um drone controlado pelo celular." }, // Mobile (Controle de Dispositivos)
+      { valor: "gestao", texto: "Organizar seus amigos para escavar, transportar a areia e construir o castelo juntos." } // Gestão (Trabalho em Equipe/Execução)
+    ]
+  },
+  {
+    pergunta: "Se você tivesse que criar uma nova invenção, qual seria sua maior preocupação?",
+    opcoes: [
+      { valor: "ia", texto: "Fazer a invenção ser tão inteligente que ela pode aprender coisas novas sozinha." }, // IA
+      { valor: "ux", texto: "Garantir que a invenção seja super fácil e divertida de usar por qualquer pessoa, sem complicação." }, // UX
+      { valor: "programacao", texto: "Escrever as instruções detalhadas para a invenção saber exatamente o que fazer e como fazer." }, // Programação
+      { valor: "frontend", texto: "Deixar a invenção com um visual incrível, cheia de cores e luzes, para todo mundo querer ver." }, // Front-end
+      { valor: "dados", texto: "Coletar e entender as informações sobre quem vai usar a invenção para torná-la perfeita para eles." }, // Ciência de Dados
+      { valor: "devops", texto: "Ter certeza que a invenção será construída e entregue para as pessoas rapidinho e funcionando sempre." }, // DevOps
+      { valor: "mobile", texto: "Adaptar a invenção para que ela possa ser controlada ou usada através de um celular ou tablet." }, // Mobile
+      { valor: "gestao", texto: "Organizar todo o processo de criação, desde a ideia até o lançamento da invenção no mercado." } // Gestão
+    ]
+  }
+];
 
-  const opcoes = [
-    ["programacao", "frontend", "dados", "ia", "devops", "ux", "mobile", "gestao"],
-    ["programacao", "frontend", "dados", "ia", "devops", "ux", "mobile", "gestao"],
-    ["programacao", "frontend", "dados", "ia", "devops", "ux", "mobile", "gestao"],
-    ["programacao", "frontend", "dados", "ia", "devops", "ux", "mobile", "gestao"],
-    ["programacao", "frontend", "dados", "ia", "devops", "ux", "mobile", "gestao"],
-    ["programacao", "frontend", "dados", "ia", "devops", "ux", "mobile", "gestao"],
-    ["programacao", "frontend", "dados", "ia", "devops", "ux", "mobile", "gestao"],
-    ["programacao", "frontend", "dados", "ia", "devops", "ux", "mobile", "gestao"],
-    ["programacao", "frontend", "dados", "ia", "devops", "ux", "mobile", "gestao"],
-    ["programacao", "frontend", "dados", "ia", "devops", "ux", "mobile", "gestao"]
-  ];
+const nomesTrilhas = {
+  programacao: "Programação",
+  frontend: "Front-End",
+  dados: "Data Science",
+  ia: "Inteligência Artificial",
+  devops: "DevOps",
+  ux: "UX & Design",
+  mobile: "Mobile",
+  gestao: "Gestão e Inovação"
+};
 
-  const textos = {
-    programacao: "Resolver problemas com código",
-    frontend: "Criar interfaces web modernas",
-    dados: "Analisar grandes volumes de dados",
-    ia: "Construir sistemas inteligentes",
-    devops: "Automatizar e integrar processos",
-    ux: "Criar boas experiências visuais",
-    mobile: "Desenvolver aplicativos para celular",
-    gestao: "Organizar projetos e liderar equipes"
-  };
+let passo = 0;
+const respostas = [];
 
-  const nomesTrilhas = {
-    programacao: "Programação",
-    frontend: "Front-End",
-    dados: "Data Science",
-    ia: "Inteligência Artificial",
-    devops: "DevOps",
-    ux: "UX & Design",
-    mobile: "Mobile",
-    gestao: "Gestão e Inovação"
-  };
-
-  let passo = 0;
-  const respostas = [];
-
-  function mostrarPergunta() {
-    if (passo >= perguntas.length) {
-      mostrarResultado();
-      return;
-    }
-
-    const pergunta = perguntas[passo];
-    const container = document.getElementById("quiz");
-    container.innerHTML = `
-      <div class="question">
-        <p>${passo + 1}. ${pergunta}</p>
-        ${opcoes[passo].map(op => `
-          <label><input type="radio" name="q${passo}" value="${op}"> ${textos[op]}</label>
-        `).join("")}
-        <button onclick="proxima()">Próxima</button>
-      </div>
-    `;
+function mostrarPergunta() {
+  // Verifica se o quiz terminou antes de tentar mostrar a próxima pergunta
+  if (passo >= quizData.length) { // Corrigido: 'perguntas.length' para 'quizData.length'
+    mostrarResultado();
+    return;
   }
 
-  function proxima() {
-    const selecionado = document.querySelector(`input[name="q${passo}"]:checked`);
-    if (!selecionado) {
-      alert("Por favor, escolha uma opção.");
-      return;
-    }
-    respostas.push(selecionado.value);
-    passo++;
-    mostrarPergunta();
-  }
+  const perguntaAtual = quizData[passo]; // Pega o objeto da pergunta atual
 
-  function mostrarResultado() {
+  const container = document.getElementById("quiz");
+  container.innerHTML = `
+    <div class="progress-bar-container">
+      <div class="progress-bar" style="width: ${(passo / quizData.length) * 100}%"></div>
+    </div>
+    <div class="question">
+      <p>${passo + 1}. ${perguntaAtual.pergunta}</p> ${preencherOpcoes(perguntaAtual.opcoes)} <div id="error-message" class="aviso" style="display: none;">Por favor, escolha uma opção.</div>
+      <button onclick="proxima()">Próxima</button>
+    </div>
+  `;
+}
+
+// Função auxiliar para renderizar as opções, tornando o código mais limpo
+function preencherOpcoes(opcoes) {
+  return opcoes.map(opcao => `
+    <label><input type="radio" name="q${passo}" value="${opcao.valor}"> ${opcao.texto}</label>
+  `).join("");
+}
+
+
+function proxima() {
+  const selecionado = document.querySelector(`input[name="q${passo}"]:checked`);
+  const errorMessage = document.getElementById("error-message"); // Obtenha a div da mensagem de erro
+
+  if (!selecionado) {
+    errorMessage.style.display = "block"; // Mostre a mensagem de erro
+    return;
+  } else {
+    errorMessage.style.display = "none"; // Esconda se uma opção for selecionada
+  }
+  respostas.push(selecionado.value);
+  passo++;
+  mostrarPergunta();
+}
+
+
+function mostrarResultado() {
   const contagem = {};
   respostas.forEach(r => {
     contagem[r] = (contagem[r] || 0) + 1;
@@ -122,14 +231,14 @@
     <button onclick="verTrilha('${trilhaFinal}')">Ver minha trilha</button>
   `;
 
-  document.getElementById("quiz").innerHTML = "";
+  document.getElementById("quiz").innerHTML = ""; // Limpa a área do quiz
 }
 
 function refazerQuiz() {
   passo = 0;
   respostas.length = 0;
-  document.getElementById("resultado").innerHTML = "";
-  mostrarPergunta();
+  document.getElementById("resultado").innerHTML = ""; // Limpa o resultado anterior
+  mostrarPergunta(); // Começa o quiz novamente
 }
 
 function verTrilha(trilha) {
@@ -139,8 +248,8 @@ function verTrilha(trilha) {
 }
 
 
-  // Iniciar o quiz
-  mostrarPergunta();
+// Iniciar o quiz
+mostrarPergunta();
 </script>
 
 </body>

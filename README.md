@@ -55,38 +55,80 @@ HTML, CSS, JavaScript, PHP, MySQL — além de ferramentas de apoio como Google 
 
 ## 📦 Como instalar e executar o sistema
 
-### 📥 1. Clonar o repositório
+### 📥 1. Pré-requisitos
+Para executar o projeto, você precisará de um ambiente de servidor local que suporte PHP e MySQL. Recomendamos:
+### XAMPP
 
+- Baixe e instale o XAMPP a partir do site oficial: https://www.apachefriends.org/pt_br/index.html
+
+## ⚙️ 2. Clonar repositório
+
+1.  Clone este repositório para dentro da pasta raiz do seu servidor XAMPP. A pasta se chama htdocs.
+
+2. Abra o terminal ou Git Bash.
+
+3. Navegue até a pasta `htdocs` do XAMPP (geralmente `C:/xampp/htdocs`).
+
+4. Execute o comando clone:
 ```bash
--git clone https://github.com/seu-usuario/tech-stars.git
+    -git clone https://github.com/seu-usuario/tech-stars.git
 ```
-## ⚙️ 2. Requisitos
-- Instale o XAMPP (https://www.apachefriends.org/pt_br/index.html)
-- Clone o projeto em htdocs (ex:/xampp/htdocs/tech-stars)
+(Lembre-se de substituir `seu-usuario` pelo nome correto)
 
-### ou
-- Instale o WAMP (https://www.wampserver.com/en/)
-- Clone o projeto em www (ex:/wamp64/www/tech-stars
+### ⚠️ Atenção: Configuração do Banco de Dados
+Por padrão, o projeto está configurado para o ambiente XAMPP padrão, que utiliza as seguintes credenciais para o MySQL:
 
-## ▶️ 3. Executar o sistema
-- Execute o XAMPP ou WAMP
-- Acesse no navegador:
+- Usuário: `root`
+- Senha: `(vazia)`
+
+Se o seu ambiente MySQL utiliza um usuário ou senha diferente, você precisará alterar as credenciais em dois arquivos antes de prosseguir:
+
+1. No arquivo `setup.php` (para a instalação):
+
+
+Abra o arquivo e altere as seguintes linhas no topo do código
+
 ```bash
-http://localhost/tech-stars/index.php
+// --- CONFIGURAÇÕES DO BANCO DE DADOS ---
+$host = 'localhost';
+$user = 'seu_usuario_aqui'; // Altere de 'root' para o seu usuário
+$pass = 'sua_senha_aqui';   // Altere de '' para a sua senha
+$db_name = 'tech_stars_db';
 ```
-## 🧪 Como testar o sistema
-1. Login
-- Acesse index.php
-- Faça login com o usuario de testes
+2. No arquivo `conexao.php` (para a aplicação):
+
+Faça a mesma alteração neste arquivo para que a aplicação funcione após a instalação:
+
 ```bash
-e-mail: teste@techstars.com
+// Ajuste com seus dados de conexão
+$host = 'localhost';
+$db   = 'tech_stars_db';
+$user = 'seu_usuario_aqui'; // Altere de 'root' para o seu usuário
+$pass = 'sua_senha_aqui';   // Altere de '' para a sua senha
+$charset = 'utf8mb4';
+```
+## ▶️ 3. Executar o Script de Instalação
+
+1. Abra o Painel de Controle do XAMPP e inicie os módulos Apache e MySQL.
+
+2. Abra seu navegador e acesse o script de instalação automática:
+
+```bash
+    http://localhost/tech-stars/setup.php
+```
+3. Siga as instruções na tela. O script irá criar o banco de dados, a tabela e um usuário de teste para você.
+
+4. (Importante) Após a instalação bem-sucedida, apague o arquivo setup.php do seu projeto por segurança.
+
+## 🧪 Acessar a Aplicação
+Com a instalação concluída, acesse a página inicial do projeto:
+
+`http://localhost/tech-stars/`
+
+Você pode fazer login com o usuário de teste  ou registrar um novo usuário.
+
+```bash
+usuário de teste: teste@techstars.com
 senha: 123456
 ```
-2. Quiz
-- Após o login, clique em "Descubra sua trilha"
-- O quis será iniciado com 10 perguntas
-- Ao final, será exibida sua trilha mais compatível
-- Use os botões
-  - **Refazer quiz**→ reinicia as perguntas
-   - **Ver minha trilha** → redireciona para o dashboard
-   
+

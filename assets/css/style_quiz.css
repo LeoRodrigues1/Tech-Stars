@@ -1,9 +1,32 @@
 body {
   background-color: #0d1117;
-  color: #e6edf3;
+  color:#e6edf3;
   font-family: Arial, sans-serif;
   margin: 0;
   padding: 0;
+}
+
+/* Animação de entrada para perguntas */
+.question {
+  animation: fadeIn 0.6s ease-in-out;
+}
+
+/* Botão com efeito sutil ao clicar */
+button:active {
+  transform: scale(0.98);
+}
+
+/* Keyframes para fade in */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.aviso {
+  color: #f87171;
+  font-size: 14px;
+  text-align: center;
+  margin-top: 10px;
 }
 
 .quiz-container {
@@ -21,8 +44,8 @@ body {
   margin-bottom: 30px;
 }
 
-.question {
-  margin-bottom: 30px;
+.question { /* Esta regra é duplicada, mas a primeira (para animação) é importante. Removendo a duplicidade aqui. */
+  margin-bottom: 30px; /* Mantendo esta regra para espaçamento */
 }
 
 .question p {
@@ -30,15 +53,7 @@ body {
   margin-bottom: 10px;
 }
 
-label {
-  display: block;
-  margin-bottom: 8px;
-  cursor: pointer;
-}
-
-input[type="radio"] {
-  margin-right: 8px;
- }
+/* Remova o label e input[type="radio"] que você tinha antes, e adicione as novas regras abaixo */
 
 button {
   background-color: #238636;
@@ -48,6 +63,7 @@ button {
   border-radius: 6px;
   font-size: 16px;
   cursor: pointer;
+  margin-top: 20px; /* Adicionado para separar do último input */
 }
 
 button:hover {
@@ -74,4 +90,74 @@ button:hover {
 
 .result button:hover {
   background-color: #4096e0;
+}
+
+/* NOVOS ESTILOS PARA BARRA DE PROGRESSO */
+.progress-bar-container {
+  width: 100%;
+  background-color: #2b303b;
+  border-radius: 5px;
+  height: 10px;
+  margin-bottom: 20px; /* Espaço abaixo da barra de progresso */
+  overflow: hidden; /* Garante que a barra interna fique dentro dos limites */
+}
+
+.progress-bar {
+  height: 100%;
+  background-color: #00ffcc; /* Uma cor brilhante e envolvente */
+  border-radius: 5px;
+  transition: width 0.5s ease-in-out; /* Animação suave na mudança de largura */
+}
+
+/* NOVOS ESTILOS PARA BOTÕES DE RÁDIO PERSONALIZADOS */
+label {
+  display: flex; /* Usado para alinhar o rádio e o texto */
+  align-items: center; /* Centraliza verticalmente os itens */
+  margin-bottom: 12px;
+  padding: 10px;
+  border: 1px solid #30363d; /* Borda sutil para as opções */
+  border-radius: 8px;
+  transition: background-color 0.2s ease, border-color 0.2s ease;
+  cursor: pointer; /* Indica que é clicável */
+}
+
+label:hover {
+  background-color: #1f242b; /* Efeito sutil ao passar o mouse */
+  border-color: #58a6ff; /* Destacar borda ao passar o mouse */
+}
+
+input[type="radio"] {
+  /* Esconda o botão de rádio padrão */
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  width: 18px;
+  height: 18px;
+  border: 2px solid #58a6ff; /* Borda azul */
+  border-radius: 50%;
+  outline: none;
+  cursor: pointer;
+  vertical-align: middle; /* Alinhar com o texto */
+  position: relative;
+  margin-right: 10px; /* Espaço entre o rádio e o texto */
+  flex-shrink: 0; /* Previne que o rádio encolha em telas pequenas */
+}
+
+input[type="radio"]:checked {
+  background-color: #00ffcc; /* Verde quando selecionado */
+  border-color: #00ffcc; /* Borda verde quando selecionado */
+}
+
+/* Círculo interno para o estado selecionado */
+input[type="radio"]:checked::before {
+  content: '';
+  display: block;
+  width: 8px;
+  height: 8px;
+  background-color: #161b22; /* Ponto escuro no centro */
+  border-radius: 50%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
